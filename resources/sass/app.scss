@@ -1,0 +1,17 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.card{
+	margin-bottom:15px;
+}
+
+.panel-footer{
+	margin-left: 20px;
+	margin-bottom:20px;
+}
