@@ -1,13 +1,14 @@
 <template>
     <div class="col-md-8">
         
-        <form-component></form-component>
+        <form-component @new="addThought"></form-component>
 
         <thought-component 
-        v-for="thought in thoughts" 
+        v-for="(thought, index) in thoughts" 
         :key="thought.id"
         :thought="thought"
-        @new="addThought">
+        @update="updateThought(index, ...arguments)"
+        @delete="deleteTghought(index)">
         </thought-component>
 
     </div>
@@ -30,6 +31,12 @@
         methods: {
             addThought(thought) {
                 this.thoughts.push(thought);
+            },
+            updateThought(index, thought){
+                this.thoughts[index]= thought;
+            },
+            deleteTghought(index){
+                this.thoughts.splice(index,1);
             }
         }
     }
