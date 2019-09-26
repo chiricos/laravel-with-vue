@@ -23,17 +23,19 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('form.')
         },
         methods: {
             newThought() {
-                let thought = {
-                    id: 2,
+                const params = {
                     description: this.description,
-                    created_at: '2019/20/15'
-                };
-                this.$emit('new',thought);
+                }
                 this.description = '';
+                axios.post('/drawde/my-thouhts/public/thoughts',params)
+                .then((response) => {
+                    const thought = response.data;
+                    this.$emit('new',thought);
+                });
             }
         }
     }

@@ -29,18 +29,29 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component thought.')
         },
         methods: {
             onClickDelete() {
-                this.$emit('delete');
+                axios.delete('/drawde/my-thouhts/public/thoughts/'+this.thought.id)
+                .then((response) => {
+                    this.$emit('delete'); 
+                });
             },
             onClickEdit() {
                 this.editMode = true;
             },
             onClickUpdate() {
-                this.editMode = false;
-                this.$emit('update', this.thought);
+                const params = {
+                    description: this.thought.description
+                }
+                axios.put('/drawde/my-thouhts/public/thoughts/'+this.thought.id,params)
+                .then((response) => {
+                    this.editMode = false;
+                    const thought = response.data;
+                    this.$emit('update', this.thought);
+                });
+                
             }
         }
     }

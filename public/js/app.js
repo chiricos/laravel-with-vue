@@ -1862,17 +1862,21 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log('form.');
   },
   methods: {
     newThought: function newThought() {
-      var thought = {
-        id: 2,
-        description: this.description,
-        created_at: '2019/20/15'
+      var _this = this;
+
+      var params = {
+        description: this.description
       };
-      this.$emit('new', thought);
       this.description = '';
+      axios.post('/drawde/my-thouhts/public/thoughts', params).then(function (response) {
+        var thought = response.data;
+
+        _this.$emit('new', thought);
+      });
     }
   }
 });
@@ -1915,7 +1919,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    var _this = this;
+
+    axios.get('/drawde/my-thouhts/public/thoughts').then(function (response) {
+      _this.thoughts = response.data;
+    });
   },
   methods: {
     addThought: function addThought(thought) {
@@ -1971,18 +1979,31 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log('Component thought.');
   },
   methods: {
     onClickDelete: function onClickDelete() {
-      this.$emit('delete');
+      var _this = this;
+
+      axios["delete"]('/drawde/my-thouhts/public/thoughts/' + this.thought.id).then(function (response) {
+        _this.$emit('delete');
+      });
     },
     onClickEdit: function onClickEdit() {
       this.editMode = true;
     },
     onClickUpdate: function onClickUpdate() {
-      this.editMode = false;
-      this.$emit('update', this.thought);
+      var _this2 = this;
+
+      var params = {
+        description: this.thought.description
+      };
+      axios.put('/drawde/my-thouhts/public/thoughts/' + this.thought.id, params).then(function (response) {
+        _this2.editMode = false;
+        var thought = response.data;
+
+        _this2.$emit('update', _this2.thought);
+      });
     }
   }
 });

@@ -26,7 +26,10 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            axios.get('/drawde/my-thouhts/public/thoughts')
+            .then((response) => {
+                this.thoughts = response.data;
+            })
         },
         methods: {
             addThought(thought) {
